@@ -1,0 +1,29 @@
+name: techsolutions_manager
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  supabase_flutter: ^2.12.2
+  go_router: ^17.2.0
+  flutter_dotenv: ^6.0.0
+  provider: ^6.1.5+1
+  intl: ^0.20.2
+  intl_phone_field: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
