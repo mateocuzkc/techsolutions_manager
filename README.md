@@ -1,70 +1,106 @@
-# techsolutions_manager
+# TechSolutions Manager
 
-# 🚀 TechSolutions Manager
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart&logoColor=white)](https://dart.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![Firebase Hosting](https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Available-222222?logo=github&logoColor=white)](https://pages.github.com/)
 
-Sistema empresarial desarrollado en **Flutter + Supabase** para la gestión de clientes, con arquitectura moderna, segura y escalable.
+Sistema de gestion de clientes, proyectos y tareas desarrollado con **Flutter** y **Supabase**, con enfoque empresarial, control de roles y una experiencia responsive para **web** y **movil**.
 
----
+## Enlaces Rapidos
 
-## 📌 Descripción del Proyecto
+- Demo Web: https://techsolutions-manager-ma-92b26.web.app
+- Repositorio: https://github.com/mateocuzkc/techsolutions_manager
 
-TechSolutions Manager es una aplicación full-stack que permite:
+## Descripcion
 
-* Autenticación de usuarios
-* Gestión de clientes (CRUD completo)
-* Interfaz moderna y responsiva
-* Conexión a base de datos en la nube (Supabase)
-* Diferenciación entre aplicación web y móvil
+**TechSolutions Manager** es una aplicacion orientada a la gestion operativa de equipos y relaciones con clientes. Permite administrar informacion clave del negocio en un solo entorno: clientes, proyectos, tareas, responsables, avances y reportes.
 
-El sistema está diseñado bajo un enfoque empresarial, separando la administración del uso operativo.
+El sistema fue construido para ofrecer:
 
----
+- una experiencia moderna y clara en Flutter
+- autenticacion real con Supabase Auth
+- gestion por roles con diferentes niveles de acceso
+- sincronizacion de datos en tiempo real con backend serverless
+- soporte para uso responsivo en navegador y dispositivos moviles
 
-## 🧱 Tecnologías Utilizadas
+## Tecnologias
+
+| Tecnologia | Uso principal |
+| --- | --- |
+| Flutter | Desarrollo del frontend web y movil |
+| Dart | Lenguaje principal del proyecto |
+| Supabase | Backend, base de datos, autenticacion y API |
+| Firebase Hosting | Publicacion de la version web |
+| GitHub Pages | Presencia y documentacion del proyecto |
+
+## Arquitectura
+
+```text
+Frontend  -> Flutter
+Backend   -> Supabase
+Hosting   -> Firebase Hosting
+```
 
 ### Frontend
 
-* Flutter (Web & Mobile)
-* Material Design
+- Flutter para interfaz web y movil
+- UI moderna, responsive y orientada a productividad
 
-### Backend / Base de Datos
+### Backend
 
-* Supabase
+- Supabase como plataforma backend
+- PostgreSQL como base de datos
+- Supabase Auth para login y sesiones
 
-  * PostgreSQL
-  * Autenticación (JWT)
-  * API automática
+### Hosting
 
-### Paquetes Flutter
+- Firebase Hosting para la demo web publica
 
-* supabase_flutter
-* flutter_dotenv
-* go_router
-* provider
-* intl
-* intl_phone_field
+## Funcionalidades
 
----
+- Gestion de clientes
+- Gestion de proyectos
+- Gestion de tareas
+- Roles y permisos por tipo de usuario
+- Login real con Supabase Auth
+- Reasignacion de responsables
+- Reportes PDF
+- Dashboard dinamico
+- Buscadores en tiempo real
+- Responsive Web/Movil
+- Avance automatico de tareas
+- Finalizacion automatica de proyectos
 
-## ⚙️ Requisitos Previos
+## Roles del Sistema
 
-* Flutter SDK instalado
-* Visual Studio Code
-* Cuenta en Supabase
-* Navegador Chrome
+### Admin
 
----
+- Gestion completa del sistema
+- Administracion de clientes, proyectos y tareas
+- Acceso a reportes globales
+- Reasignacion de responsables
 
-## 🔧 Instalación del Proyecto
+### Usuario
+
+- Gestion de registros asignados
+- Acceso a clientes, proyectos y tareas segun permisos
+- Uso de reportes filtrados por responsable
+
+### Cliente
+
+- Visualizacion controlada de informacion relacionada a su cuenta
+- Acceso a proyectos y tareas de su cliente
+
+## Instalacion
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/mateocuzkc/techsolutions_manager.git
 cd techsolutions_manager
 ```
-
----
 
 ### 2. Instalar dependencias
 
@@ -72,28 +108,16 @@ cd techsolutions_manager
 flutter pub get
 ```
 
----
+### 3. Configurar variables de entorno
 
-### 3. Crear archivo `.env`
-
-En la raíz del proyecto:
-
-```
-.env
-```
-
-Contenido:
+Crea un archivo `.env` en la raiz del proyecto:
 
 ```env
-SUPABASE_URL=https://TU_PROJECT_ID.supabase.co
-SUPABASE_ANON_KEY=TU_PUBLIC_KEY
+SUPABASE_URL=https://TU_PROYECTO.supabase.co
+SUPABASE_ANON_KEY=TU_SUPABASE_ANON_KEY
 ```
 
----
-
-### 4. Configurar `pubspec.yaml`
-
-Asegúrate de tener:
+### 4. Verificar carga de assets en `pubspec.yaml`
 
 ```yaml
 flutter:
@@ -102,206 +126,52 @@ flutter:
     - .env
 ```
 
----
-
-### 5. Ejecutar la aplicación
+### 5. Ejecutar la aplicacion
 
 ```bash
 flutter run -d chrome
 ```
 
----
+Si deseas ejecutar en movil:
 
-## 🗄️ Base de Datos (Supabase)
-
-Ejecutar en el **SQL Editor**:
-
-```sql
-create table if not exists public.clientes (
-  id bigint generated always as identity primary key,
-  nombre text not null,
-  correo text,
-  telefono text,
-  empresa text,
-  estado text default 'Activo',
-  created_at timestamp with time zone default now()
-);
-
-alter table public.clientes enable row level security;
-
-create policy "Permitir lectura"
-on public.clientes
-for select
-to authenticated
-using (true);
-
-create policy "Permitir inserción"
-on public.clientes
-for insert
-to authenticated
-with check (true);
-
-create policy "Permitir actualización"
-on public.clientes
-for update
-to authenticated
-using (true);
-
-create policy "Permitir eliminación"
-on public.clientes
-for delete
-to authenticated
-using (true);
+```bash
+flutter run
 ```
 
----
+## Demo Web
 
-## 🔐 Autenticación
+La version desplegada del sistema esta disponible en:
 
-El sistema utiliza Supabase Auth:
+**https://techsolutions-manager-ma-92b26.web.app**
 
-* Registro de usuarios (solo web)
-* Inicio de sesión con correo y contraseña
-* Sesión persistente
-* Cierre de sesión (logout)
+## Capturas
 
----
+Puedes reemplazar estos placeholders por imagenes reales del proyecto cuando lo desees:
 
-## 👥 Gestión de Usuarios y Roles
-
-### 👑 Administrador
-
-* Accede desde la web
-* Puede:
-
-  * Crear usuarios
-  * Editar usuarios
-  * Eliminar usuarios
-  * Bloquear cuentas
-  * Administrar el sistema
-
-### 👤 Usuario
-
-* Accede desde web y móvil
-* Puede:
-
-  * Iniciar sesión
-  * Usar el sistema (clientes, proyectos, tareas)
-* ❌ No puede administrar usuarios
-
----
-
-## 🌐📱 Diferenciación Web vs Móvil
-
-### 🌐 Aplicación Web
-
-* Registro de usuarios
-* Administración de usuarios
-* Acceso completo al sistema
-
-### 📱 Aplicación Móvil
-
-* Inicio de sesión
-* Uso del sistema
-* ❌ Sin registro
-* ❌ Sin administración
-
----
-
-## 🧠 Implementación Técnica
-
-Se utiliza detección de plataforma:
-
-```dart
-import 'package:flutter/foundation.dart';
-
-if (kIsWeb) {
-  // Mostrar registro y administración
-} else {
-  // Ocultar opciones
-}
+```md
+![Login](docs/screenshots/login.png)
+![Dashboard](docs/screenshots/dashboard.png)
+![Clientes](docs/screenshots/clientes.png)
+![Proyectos](docs/screenshots/proyectos.png)
+![Tareas](docs/screenshots/tareas.png)
 ```
 
----
+Sugerencia de secciones visuales para GitHub:
 
-## 📂 Estructura del Proyecto
+- Pantalla de login
+- Dashboard principal
+- Modulo de clientes
+- Modulo de proyectos
+- Modulo de tareas
+- Reportes PDF
 
-```
-lib/
- ├── main.dart
- ├── screens/
- │    ├── auth/
- │    │    └── login_screen.dart
- │    ├── dashboard/
- │    │    └── dashboard_screen.dart
- │    └── clientes/
- │         └── clientes_screen.dart
-```
+## Autor
 
----
+**Mateo Augusto Cuz Kuckling Catalan**
 
-## 👤 Módulo de Clientes
-
-### Funcionalidades
-
-* Crear cliente
-* Listar clientes
-* Editar cliente
-* Eliminar cliente
-* Estado (Activo / Inactivo)
-* Visualización con indicador (verde / rojo)
-* Teléfono internacional con banderita 🌎
-* Código automático (ID)
+- GitHub: https://github.com/mateocuzkc
+- Repositorio del proyecto: https://github.com/mateocuzkc/techsolutions_manager
 
 ---
 
-## 🎯 Flujo del Sistema
-
-1. Usuario inicia sesión
-2. Accede al dashboard
-3. Ingresa al módulo de clientes
-4. Gestiona información en tiempo real
-
----
-
-## 🔒 Seguridad
-
-* Autenticación con JWT
-* Row Level Security (RLS)
-* Acceso restringido a usuarios autenticados
-* Control de roles
-
----
-
-## 🌍 Arquitectura
-
-* Flutter → Cliente (Web y Mobile)
-* Supabase → Backend serverless
-* PostgreSQL → Base de datos en la nube
-
----
-
-## 🚧 Próximas Funcionalidades
-
-* 📁 Gestión de proyectos
-* 📋 Gestión de tareas
-* 👑 Roles completos (admin / usuario)
-* 🎨 Mejoras UI/UX
-* 🌐 Deploy en la nube
-
----
-
-## 🎯 Estado del Proyecto
-
-🟢 Autenticación completa
-🟢 CRUD de clientes completo
-🟢 UI funcional
-🟡 En desarrollo: módulos avanzados
-
----
-
-## 👨‍💻 Autor
-
-Proyecto desarrollado con enfoque educativo y empresarial.
-
----
+TechSolutions Manager fue desarrollado como una solucion de gestion moderna, escalable y profesional, enfocada en organizar clientes, proyectos y tareas dentro de un solo ecosistema.
